@@ -1,0 +1,114 @@
+.gifImage {
+  display: none;
+  top: 25%;
+  left: 25%;
+  position: absolute;
+}
+
+.gifTitle {
+  cursor: pointer;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+body {
+  background-image: url(http://subtlepatterns.com/patterns/tweed.png);
+  color: #fff;
+  text-align: center;
+}
+
+.itemBox {
+  width: 200px;
+  height: 200px;
+  float: left;
+  display: table;
+  padding: 5px;
+}
+
+.itemBox:hover {
+  box-shadow: 0px 0px 10px #999;
+}
+
+.playAudio {
+  width: 50px;
+  height: 50px;
+}
+
+audio {
+  display: none;
+}
+
+.playAudio {
+  margin-top: 5px;
+}
+
+.card {
+  float: left;
+}
+.card .play, .card .pause {
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: 50% 50%;
+}
+.card .play {
+  background-image: url(../../assets/images/play.png);
+}
+.card .pause {
+  background-image: url(../../assets/images/pause.png);
+}
+
+.itemWrap {
+  float: left;
+  width: 20%;
+  margin: 2% 5%;
+}
+
+.flip {
+  -webkit-perspective: 800;
+  width: 100%;
+  height: 200px;
+  position: relative;
+  margin: 5% 5%;
+}
+
+.flip .card.flipped {
+  -webkit-transform: rotatex(-180deg);
+}
+
+.flip .card {
+  width: 100%;
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: 0.5s;
+}
+
+.flip .card .face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+  z-index: 2;
+  font-family: Georgia;
+  font-size: 3em;
+  text-align: center;
+  line-height: 200px;
+}
+
+.flip .card .front {
+  position: absolute;
+  z-index: 1;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+.flip .card .back {
+  -webkit-transform: rotatex(-180deg);
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.clear {
+  clear: both;
+}

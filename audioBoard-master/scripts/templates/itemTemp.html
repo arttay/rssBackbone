@@ -1,0 +1,20 @@
+
+<div class="itemWrap">
+<div class="asd"><%- descp %></div>
+<div class="flip playAudio <%- name %> play"> 
+        <div class="card"> 
+            <div class="face <%= name %> front play "> 
+            
+            </div> 
+            <div class="face <%= name %> back pause"> 
+                <audio controls="controls" class="audio <%= name  %>">
+                    Your browser does not support the <code>audio</code> element.
+                    <source src="<%= link  %>" type="audio/mpeg">
+                </audio>
+            </div> 
+        </div> <!--end card--> 
+    </div> 
+
+</div><!--end itemwrap-->
+
+

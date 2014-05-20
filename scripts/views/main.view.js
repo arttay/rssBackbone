@@ -42,35 +42,13 @@ define(['jquery',
       this.setUserInfo(userInfo);
 
      
-
+      $("#feedData").empty();
       $("#feedData").rss(feedUrl, {
             layoutTemplate: layoutTemplate,
             entryTemplate: entryTemplate,
             outputMode: 'json_xml',
             xmlParseElem: "enclosure",
       });     
-    },
-    setup: function(data){
-      var that = this;
-        //console.log(self.itemTemp);
-      $("#feedData").empty();
-    
-      var parsed = JSON.parse(data),
-        rss = parsed.rss.channel,
-        rssTitle = rss.title,
-        rssLink = rss.link,
-        rssHtml = "<div class='previousItem'><a href="+ rssLink +" >"+rssTitle+"</a></div>";
-          $(".previousRss").append(rssHtml);
-        start = 0;
-        end = 10;
-        $(rss.item).each(function(key, value){
-          if(key >= end){
-            return;
-          }
-          value.url = value.enclosure["@url"];
-        $("#feedData").append(that.template(value));
-        });
-
     },
     get: function(data){
      var item = localStorage.getItem(data);
@@ -107,40 +85,7 @@ define(['jquery',
      
 
       }//end if else
-    },
-    toJson: function(xml){
-         var obj = {};
-    if (xml.nodeType == 1) {                
-        if (xml.attributes.length > 0) {
-            obj["@attributes"] = {};
-            for (var j = 0; j < xml.attributes.length; j++) {
-                var attribute = xml.attributes.item(j);
-                obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
-            }
-        }
-    } else if (xml.nodeType == 3) { 
-        obj = xml.nodeValue;
-    }            
-    if (xml.hasChildNodes()) {
-        for (var i = 0; i < xml.childNodes.length; i++) {
-            var item = xml.childNodes.item(i);
-            var nodeName = item.nodeName;
-            if (typeof (obj[nodeName]) == "undefined") {
-                obj[nodeName] = xmlToJson(item);
-            } else {
-                if (typeof (obj[nodeName].push) == "undefined") {
-                    var old = obj[nodeName];
-                    obj[nodeName] = [];
-                    obj[nodeName].push(old);
-                }
-                obj[nodeName].push(xmlToJson(item));
-            }
-        }
     }
-    return obj;
-    }
-
-  
   });
 
   return MainView;

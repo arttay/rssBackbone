@@ -34,13 +34,12 @@
   RSS.prototype.load = function(callback) {
     var apiProtocol = "http" + (this.options.ssl ? "s" : "")
       , apiHost     = apiProtocol + "://ajax.googleapis.com/ajax/services/feed/load"
-      , apiUrl      = apiHost + "?v=1.0&output=" + this.options.outputMode + "&callback=?&q=" + encodeURIComponent(this.url),
-      newUrl = 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&output=json_xml&num=10&callback=?&q='+ encodeURIComponent(this.url);
+      , apiUrl      = apiHost + "?v=1.0&output=" + this.options.outputMode + "&callback=?&q=" + encodeURIComponent(this.url);
 
     if (this.options.limit != null) apiUrl += "&num=" + this.options.limit;
     if (this.options.key != null)   apiUrl += "&key=" + this.options.key;
 
-    $.getJSON(newUrl, callback)
+    $.getJSON(apiUrl, callback)
   }
 
   RSS.prototype.render = function() {
@@ -102,7 +101,13 @@
 
     $(this.entries).each(function(key) {
       //key is needed for xml parsing
-      var entry = this
+      var entry = this;
+
+      if(self.options.xmlParseElem !== null){
+        if(self.xmlFoundElem[key].attributes["url"] !== undefined){
+          entry.xmlElem = self.xmlFoundElem[key].attributes["url"].value;
+        }
+      }
 
       if(self.isRelevant(entry)) {
         var evaluatedString = self.evaluateStringForEntry(self.options.entryTemplate, entry)
@@ -198,12 +203,13 @@
   }
 
   RSS.prototype.getTokenMap = function(entry) {
+    var self = this;
     if (!this.feedTokens) {
       var feed = JSON.parse(JSON.stringify(this.feed))
       delete feed.entries
       this.feedTokens = feed
     }
-    //console.log(entry);
+ 
 
     return $.extend({
       feed:      this.feedTokens,
@@ -238,7 +244,14 @@
       teaserImageUrl: (function(entry) {
         try { return entry.content.match(/(<img.*?>)/gi)[0].match(/src="(.*?)"/)[1] }
         catch(e) { return "" }
+      })(entry),
+
+      xmlElem: (function(entry){
+        if(self.options.xmlParseElem !== null){
+            return entry.xmlElem;
+        }
       })(entry)
+
     }, this.options.tokens)
   }
 
@@ -256,12 +269,14 @@
   }
 
   RSS.prototype.parseXml = function(data){   
+
     var xml  = data.responseData.xmlString,
         xmlDoc = $.parseXML( xml ),
         $xml = $( xmlDoc ),
         $xmlFind = $xml.find(this.options.xmlParseElem);
 
         this.xmlFoundElem = $xmlFind;
+           console.log(this.xmlFoundElem);
   }
 
 

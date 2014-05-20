@@ -1,4 +1,4 @@
-.itemObject,.podcastPlay {
+.itemObject {
 	margin: 10px;
 	outline: 1px solid #000;
 	width: 75%;
@@ -16,3 +16,10 @@
 .itemObject:hover{
   cursor: pointer;
 }
+.podcastPlay {
+	width: 65%;
+	margin: auto;
+}
+
+
+

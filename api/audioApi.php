@@ -1,18 +1,23 @@
 <?php
-	
+	 
+
+
    	if(isset($_POST['functionname']) ) { 
-   		$feed = $_POST['arguments'];
-   		getUrl($feed);
+   		$feed = $_POST['arguments'][0];
+      $userName = $_POST['arguments'][1];
+      $userPass = $_POST['arguments'][2];
+   	  getUrl($feed);
    	}
+//include_once("../backend/database/connect.php");
        function getUrl($feed){
-          $ch = curl_init($feed[0]);
+          $ch = curl_init($feed);
           curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
           $json = '';
           if( ($json = curl_exec($ch) ) === false) {
               echo 'Curl error: ' . curl_error($ch);
           }
           else {
-              data($feed[0]);
+              data($feed);
           }
           curl_close($ch);
   
@@ -27,16 +32,6 @@
          $arrayData = xmlToArray($anobii);
           echo json_encode($arrayData);
 
-  
-
-          /*
-        	foreach ($anobii->channel->item as $anobiiinfo):
-            		$title=$anobiiinfo->title;
-            		$desc=$anobiiinfo->description;
-            	
-            		echo "<div class='item'><div> ",$title,"</div>  <div> ",$desc,"</div></div>";
-        	endforeach;
-      */
 	}//end data
   function xmlToArray($xml, $options = array()) {
     $defaults = array(

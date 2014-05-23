@@ -22,6 +22,9 @@ require.config({
     "rss": {
             deps: ['jquery']
     },
+    "rssHelper": {
+            deps: ['jquery']
+    },
   },
   paths: {
     jquery: "vendor/jquery/jquery",
@@ -35,6 +38,7 @@ require.config({
     models: "models",
     toJson: "helpers/xmlToJson",
     rss : "helpers/rss",
+    rssHelper: "helpers/rssHelper",
 
   }
 

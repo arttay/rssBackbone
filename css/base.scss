@@ -5,7 +5,11 @@
 }
 .previousRss {
 	float: right;
+	li {
+		list-style-type: none;
+	}
 }
+
 #feedData {
 	width: 50%;
 	float: left;
@@ -20,6 +24,22 @@
 	width: 65%;
 	margin: auto;
 }
+.savedGroups {
+	span {
+		font-weight: bold;
+		font-size: 110%;
+	}
+	.linkLabel {
+		margin-right: 15px;
+		font-weight: normal;
+	}
+
+}
+
+
+
+
+
 
 
 

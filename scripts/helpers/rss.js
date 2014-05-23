@@ -209,6 +209,7 @@
       delete feed.entries
       this.feedTokens = feed
     }
+    window.rssLink = entry.link;
  
 
     return $.extend({
@@ -276,7 +277,6 @@
         $xmlFind = $xml.find(this.options.xmlParseElem);
 
         this.xmlFoundElem = $xmlFind;
-           console.log(this.xmlFoundElem);
   }
 
 

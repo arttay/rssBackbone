@@ -1,14 +1,16 @@
-define(['jquery', 'underscore', 'backbone', 'views/main.view'], function
+define(['jquery', 'underscore', 'backbone', 'views/main.view', "router/router"], function
 	(
 	$,
 	_,
 	Backbone,
-  main
+  main,
+  Router
 
 	)  {
   var App = Backbone.View.extend({
     initialize: function() {
-    this.main = new main();
+      Router.initialize();
+    //this.main = new main();
     },
     render: function(){
 

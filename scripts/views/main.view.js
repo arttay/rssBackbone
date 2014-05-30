@@ -70,6 +70,9 @@ define(['jquery',
             outputMode: 'json_xml',
             xmlParseElem: "enclosure",
             limit: 10,
+            error: function(){
+              $("#feedData").html("<p class='feedError'>It looks like there was an error with the feed url, could you take a look at it.</p>")
+            },
       });   
       this.previousRss = _.template(previousRss, {feedUrl: feedUrl});
       if($(".previousRss").children().length >= 5){

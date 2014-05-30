@@ -47,11 +47,13 @@
     var self = this
 
     this.load(function(data) {
-     if(self.options.xmlParseElem !== null) self.parseXml(data);
+     // console.log(data);
+    
 
       try {
         self.feed    = data.responseData.feed
         self.entries = data.responseData.feed.entries
+         if(self.options.xmlParseElem !== null) self.parseXml(data);
       } catch(e) {
         self.entries = []
         self.feed    = null
@@ -270,7 +272,7 @@
   }
 
   RSS.prototype.parseXml = function(data){   
-
+ 
     var xml  = data.responseData.xmlString,
         xmlDoc = $.parseXML( xml ),
         $xml = $( xmlDoc ),

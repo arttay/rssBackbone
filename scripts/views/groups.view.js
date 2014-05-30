@@ -23,7 +23,8 @@ define(['jquery',
   var MainView = Backbone.View.extend({
     el: $('body'),
      events: {
-   
+      "click .createGroupSub" : "createGroup",
+      "click .deleteLink" : "delete"
     },
   
     template: _.template(html),
@@ -42,13 +43,8 @@ define(['jquery',
                 that.updateUI(data);             
              }
       });
-
-
-
     },
- 
     render: function(data){
- 
     },
     updateUI: function(data){
       var that = this;
@@ -57,10 +53,33 @@ define(['jquery',
         temp = _.template(htmlT, {link: value});
         $(".savedGroups").append(temp);
       });
-      
+    },
+    delete: function(){
+      //http://www.gamerswithjobs.com/taxonomy/term/408/0/feed
+      console.log("delete");
+      $("input[type=checkbox]:checked").each(function(key, value) {
+             var dataValue = $(value).data("link");
+              
+              $.ajax({
+              type: "POST",
+              url: "backend/init.php",
+              dataType: 'json',
+              data: {functionname: 'deleteDB', arguments: [dataValue, "null", "null", "delete"]},
+              success: function (data) {
+                          
+             }
+      });
 
+
+
+
+      });
+    },
+    createGroup: function(e){
+      e.preventDefault();
+      var text = $(".createGroupInput").val();
+      console.log(text);
     }
-   
   });
 
   return MainView;

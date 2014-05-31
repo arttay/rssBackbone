@@ -7,6 +7,7 @@ define(['jquery',
   "rss",
   "rssHelper",
   "text!templates/itemTemp.html",
+  "text!templates/main.html",
   "text!templates/entryTemplate.html",
   "text!templates/layoutTemplate.html",
   "text!templates/previousRss.html",
@@ -21,6 +22,7 @@ define(['jquery',
   rss,
   rssHelper,
   html,
+  mainHtml,
   entryTemplate,
   layoutTemplate,
   previousRss,
@@ -34,11 +36,16 @@ define(['jquery',
         "click .previousRss li" : "previousItem"
     },
     template: _.template(html),
+    mainTemplate: _.template(mainHtml),
     phpTemp: _.template(phpTemp),
     initialize: function() { 
       this.userName = location.hash.split("/")[1];
+      this.render();
     },
     render: function(data){
+      $("#main").html(this.mainTemplate());
+
+
     },
     formSub: function(e){
       var that = this;

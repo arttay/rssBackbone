@@ -2,8 +2,8 @@
 
 $link = mysqli_connect("localhost","root","","rss") or die();
 
-
-$query = "SELECT userLinks FROM data WHERE userName = '$userName'";
+$userData = $userName."Data";
+$query = "SELECT userLinks FROM $userData WHERE userName = '$userName'";
 $result = mysqli_query($link, $query);  
 
 

@@ -6,6 +6,10 @@
       $userName = $_POST['arguments'][1];
       $userPass = $_POST['arguments'][2];
       $state = $_POST['arguments'][3];
+      $groupName = $_POST['arguments'][4];
+
+
+
 
 
       switch($state) {
@@ -17,6 +21,9 @@
           break;
         case "delete":
               deleteDB($feed);
+          break;
+        case "createGroup":
+              deleteDB($userName, $groupName, $feed);
           break;
       }
       /*
@@ -32,6 +39,8 @@
     }//end init inint
   function connectDb($feed, $userName, $userPass){
     include_once "database/connect.php";
+     echo json_encode($userName);
+     echo json_encode($groupName);
   }
   function getElems($userName){
     include_once "database/find.php";
@@ -39,6 +48,9 @@
   }
   function deleteDB($feed) {
     include_once "database/delete.php";
+  }
+  function createGroup($userName, $groupName, $feed) {
+    include_once "database/createGroup.php";
   }
 
 

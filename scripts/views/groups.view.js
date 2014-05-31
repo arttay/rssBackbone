@@ -2,7 +2,8 @@
 //http://www.gamerswithjobs.com/taxonomy/term/408/0/feed
 define(['jquery', 
   'underscore', 
-  'backbone', 
+  'backbone',
+  "ui", 
   'collections/main.collection', 
   "rss",
   "rssHelper",
@@ -14,6 +15,7 @@ define(['jquery',
 	$,
 	_,
 	Backbone,
+  ui,
   collection,
   rss,
   rssHelper,
@@ -51,34 +53,52 @@ define(['jquery',
 
       _.each(data, function(value, key){
         temp = _.template(htmlT, {link: value});
-        $(".savedGroups").append(temp);
+        $(".links").append(temp);
       });
+
+      $(".groupitem").draggable({
+           revert : function(event, ui) {
+           if(event){
+            var toDelete = $(this).data("link");
+            $('.groupitem').filter('[data-link="'+toDelete +'"]').remove();
+           }
+            $(this).data("uiDraggable").originalPosition = {
+                top : 0,
+                left : 0
+            };
+            return !event;
+          }
+      });//end drag
+      $( ".groups" ).droppable();//end drop
     },
     delete: function(){
-      //http://www.gamerswithjobs.com/taxonomy/term/408/0/feed
-      console.log("delete");
       $("input[type=checkbox]:checked").each(function(key, value) {
+            $(value).parent()[0].remove();
              var dataValue = $(value).data("link");
-              
               $.ajax({
-              type: "POST",
-              url: "backend/init.php",
-              dataType: 'json',
-              data: {functionname: 'deleteDB', arguments: [dataValue, "null", "null", "delete"]},
-              success: function (data) {
-                          
-             }
-      });
-
-
-
-
-      });
-    },
+                type: "POST",
+                url: "backend/init.php",
+                dataType: 'json',
+                data: {functionname: 'deleteDB', arguments: [dataValue, "null", "null", "delete"]},
+              });//end ajax
+      });//end each input 
+    },//end delete
     createGroup: function(e){
       e.preventDefault();
       var text = $(".createGroupInput").val();
-      console.log(text);
+     $(".groups").append(text);
+
+     
+       jQuery.ajax({
+              type: "POST",
+              url: "backend/init.php",
+              dataType: 'json',
+              data: {functionname: 'createGroup', arguments: ["null", this.userName, "null", "groups", text]},
+              success: function (data) {
+                that.updateUI(data);             
+             }
+      });
+
     }
   });
 

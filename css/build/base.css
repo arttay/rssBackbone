@@ -29,11 +29,16 @@
   margin: auto;
 }
 
-.savedGroups span {
+.savedLinks {
+  width: 50%;
+  float: left;
+}
+
+.links span {
   font-weight: bold;
   font-size: 110%;
 }
-.savedGroups .linkLabel {
+.links .linkLabel {
   margin-right: 15px;
   font-weight: normal;
 }

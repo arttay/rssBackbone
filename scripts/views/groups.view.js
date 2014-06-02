@@ -42,6 +42,7 @@ define(['jquery',
               dataType: 'json',
               data: {functionname: 'getElems', arguments: ["null", this.userName, "null", "groups"]},
               success: function (data) {
+                console.log(data);
                 that.updateUI(data);             
              }
       });
@@ -87,16 +88,11 @@ define(['jquery',
       e.preventDefault();
       var text = $(".createGroupInput").val();
      $(".groups").append(text);
-
-     
        jQuery.ajax({
               type: "POST",
               url: "backend/init.php",
               dataType: 'json',
-              data: {functionname: 'createGroup', arguments: ["null", this.userName, "null", "groups", text]},
-              success: function (data) {
-                that.updateUI(data);             
-             }
+              data: {functionname: 'createGroup', arguments: ["null", this.userName, "null", "createGroup", text]}
       });
 
     }

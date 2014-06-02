@@ -6,7 +6,10 @@
       $userName = $_POST['arguments'][1];
       $userPass = $_POST['arguments'][2];
       $state = $_POST['arguments'][3];
-      $groupName = $_POST['arguments'][4];
+      if(isset($_POST['arguments'][4])){
+         $groupName = $_POST['arguments'][4];
+      }
+     
 
 
 
@@ -23,7 +26,7 @@
               deleteDB($feed);
           break;
         case "createGroup":
-              deleteDB($userName, $groupName, $feed);
+              createGroup($userName, $groupName, $feed);
           break;
       }
       /*

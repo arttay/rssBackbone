@@ -9,6 +9,7 @@ define(['jquery',
   "rssHelper",
   "text!templates/groups.html",
   "text!templates/groupsItem.html",
+  "text!templates/groupTemp.html",
 
   ], function
 	(
@@ -20,7 +21,8 @@ define(['jquery',
   rss,
   rssHelper,
   html,
-  htmlT
+  htmlT,
+  groupsTemp
 	)  {
   var MainView = Backbone.View.extend({
     el: $('body'),
@@ -30,6 +32,7 @@ define(['jquery',
     },
   
     template: _.template(html),
+    
     initialize: function() {
       this.userName = location.hash.split("/")[1];
       var that = this;
@@ -45,12 +48,18 @@ define(['jquery',
                 console.log(data);
                 that.updateUI(data);             
              }
-      });
+      });//end ajax
+      
+
+
+
+
     },
     render: function(data){
     },
     updateUI: function(data){
       var that = this;
+      this.groupTemp =  _.template(groupsTemp),
 
       _.each(data, function(value, key){
         temp = _.template(htmlT, {link: value});
@@ -59,8 +68,10 @@ define(['jquery',
 
       $(".groupitem").draggable({
            revert : function(event, ui) {
+            console.log(ui);
            if(event){
             var toDelete = $(this).data("link");
+            console.log(toDelete);
             $('.groupitem').filter('[data-link="'+toDelete +'"]').remove();
            }
             $(this).data("uiDraggable").originalPosition = {
@@ -71,6 +82,18 @@ define(['jquery',
           }
       });//end drag
       $( ".groups" ).droppable();//end drop
+        jQuery.ajax({
+              type: "POST",
+              url: "backend/init.php",
+              dataType: 'json',
+              data: {functionname: 'getGroups', arguments: ["null", this.userName, "null", "getGroups"]},
+              success: function (data) {
+                   _.each(data, function(value){
+                     that.groupTemp =  _.template(groupsTemp, {data: value});
+                    $(".groups").append(that.groupTemp); 
+                   });         
+             }
+      });//end ajax
     },
     delete: function(){
       $("input[type=checkbox]:checked").each(function(key, value) {

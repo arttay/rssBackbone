@@ -23,21 +23,44 @@
         case "createGroup":
               createGroup($userName, $groupName, $feed);
           break;
+        case "addToGroup":
+              addToGroup();
+          break;
+        case "getGroups":
+              getGroups($userName);
+          break;
+
+          
       }
     }//end init inint
+
   function connectDb($feed, $userName, $userPass){
+    include_once "database/initDb.php";
     include_once "database/connect.php";
   }
   function getElems($userName){
+    include_once "database/initDb.php";
     include_once "database/find.php";
     echo json_encode($myArray);
   }
   function deleteDB($feed) {
+    include_once "database/initDb.php";
     include_once "database/delete.php";
   }
   function createGroup($userName, $groupName, $feed) {
+    include_once "database/initDb.php";
     include_once "database/createGroup.php";
   }
+  function addToGroup($feed, $userName){
+    include_once "database/initDb.php";
+    include_once "database/addToGroup.php"; 
+  }
+  function getGroups($userName){
+    include_once "database/initDb.php";
+    include_once "database/getGroups.php"; 
+    echo json_encode($groupsArray);
+  }
+
 
 
 ?>

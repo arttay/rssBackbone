@@ -10,11 +10,6 @@
          $groupName = $_POST['arguments'][4];
       }
      
-
-
-
-
-
       switch($state) {
         case "insert": 
               connectDb($feed, $userName, $userPass);
@@ -29,21 +24,9 @@
               createGroup($userName, $groupName, $feed);
           break;
       }
-      /*
-      if($state == "insert"){
-          connectDb($feed, $userName, $userPass);  
-      }
-      if($state == "groups") {
-        getElems($userName);
-      }
-      */
-
-
     }//end init inint
   function connectDb($feed, $userName, $userPass){
     include_once "database/connect.php";
-     echo json_encode($userName);
-     echo json_encode($groupName);
   }
   function getElems($userName){
     include_once "database/find.php";

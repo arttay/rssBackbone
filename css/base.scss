@@ -47,6 +47,27 @@
 		margin-right: 15px;
 	}
 }
+.groups {
+	width: 50%;
+	float: right;
+	.groupWrapper {
+		padding: 15px;
+	}
+}
+.groupWrapper {
+	width: 45%;
+	float: right;
+	text-align: center;
+	font-size: 2em;
+	margin-right: 10%;
+	margin-top: 10px;
+	.groupName {
+		border: 1px solid #000;
+	}
+}
+.groupDropDown {
+	display: none;
+}
 
 
 

@@ -24,7 +24,7 @@
               createGroup($userName, $groupName, $feed);
           break;
         case "addToGroup":
-              addToGroup();
+              addToGroup($feed, $userName, $userPass);
           break;
         case "getGroups":
               getGroups($userName);
@@ -51,14 +51,19 @@
     include_once "database/initDb.php";
     include_once "database/createGroup.php";
   }
-  function addToGroup($feed, $userName){
+  function addToGroup($feed, $userName, $userPass){
     include_once "database/initDb.php";
     include_once "database/addToGroup.php"; 
   }
   function getGroups($userName){
     include_once "database/initDb.php";
     include_once "database/getGroups.php"; 
-    echo json_encode($groupsArray);
+    //echo json_encode($groupsArray);
+   // echo json_encode($itemsArray);  
+    echo json_encode($resp);  
+
+    
+
   }
 
 

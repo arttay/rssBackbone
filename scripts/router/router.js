@@ -23,8 +23,7 @@ define([
  
   var initialize = function(options, userName){
    // var appView = options.appView;
-  console.log(options);
-  console.log(userName);
+
     var router = new AppRouter(options);
     router.on('route:main', function () {
     	this.main = new main();

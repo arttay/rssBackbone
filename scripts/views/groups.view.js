@@ -10,6 +10,7 @@ define(['jquery',
   "text!templates/groups.html",
   "text!templates/groupsItem.html",
   "text!templates/groupTemp.html",
+  "text!templates/dropDownGroup.html",
 
   ], function
 	(
@@ -22,13 +23,15 @@ define(['jquery',
   rssHelper,
   html,
   htmlT,
-  groupsTemp
+  groupsTemp,
+  dropDownGroup
 	)  {
   var MainView = Backbone.View.extend({
     el: $('body'),
      events: {
       "click .createGroupSub" : "createGroup",
-      "click .deleteLink" : "delete"
+      "click .deleteLink" : "delete",
+      "click .groupName" : "slideMenu"
     },
   
     template: _.template(html),
@@ -45,19 +48,16 @@ define(['jquery',
               dataType: 'json',
               data: {functionname: 'getElems', arguments: ["null", this.userName, "null", "groups"]},
               success: function (data) {
-                console.log(data);
+                       console.log(data);
                 that.updateUI(data);             
              }
       });//end ajax
       
-
-
-
-
     },
     render: function(data){
     },
     updateUI: function(data){
+
       var that = this;
       this.groupTemp =  _.template(groupsTemp),
 
@@ -67,33 +67,56 @@ define(['jquery',
       });
 
       $(".groupitem").draggable({
-           revert : function(event, ui) {
-            console.log(ui);
+           revert : function(event, ui) { 
            if(event){
             var toDelete = $(this).data("link");
-            console.log(toDelete);
+            //that.LinkToAdd = toDelete;
             $('.groupitem').filter('[data-link="'+toDelete +'"]').remove();
-           }
-            $(this).data("uiDraggable").originalPosition = {
-                top : 0,
-                left : 0
-            };
+           } 
             return !event;
+          },//end revert
+          start: function(event, ui){
+            that.LinkToAdd = $(event.currentTarget).children("input").data("link");
           }
       });//end drag
-      $( ".groups" ).droppable();//end drop
-        jQuery.ajax({
+          
+        $.when($.ajax({
               type: "POST",
               url: "backend/init.php",
               dataType: 'json',
               data: {functionname: 'getGroups', arguments: ["null", this.userName, "null", "getGroups"]},
-              success: function (data) {
-                   _.each(data, function(value){
+      })).then(function(data){
+          
+           _.each(data[0], function(value){
                      that.groupTemp =  _.template(groupsTemp, {data: value});
-                    $(".groups").append(that.groupTemp); 
-                   });         
-             }
-      });//end ajax
+                    $(".savedLinks").after(that.groupTemp); 
+          });//end each
+        
+          _.each(data[1], function(value, key){
+            dropDownTemp = _.template(dropDownGroup);
+              var link = value.links,
+                  group = value.GroupName,
+                  target = $(".groupWrapper").children("."+group);
+                  if(group !== null){
+                    $(Ttarget).append(dropDownTemp);
+                  }
+          });//end each
+          _.each($(".groupWrapper"), function(value, key){
+             $(value).children("p").wrapAll("<div class='groupDropDown'></div>");
+          });
+          $( ".groupWrapper" ).droppable({ 
+              greedy: true,
+              drop: function(event, ui){
+                var addtoGroup = event.target.children[0].classList[1];
+                $.ajax({
+                    type: "POST",
+                    url: "backend/init.php",
+                    dataType: 'json',
+                    data: {functionname: 'addToGroup', arguments: [addtoGroup, that.userName, that.LinkToAdd, "addToGroup"]},
+                });//end aja
+              }//end drop
+          });//end dropable
+        }); //end then
     },
     delete: function(){
       $("input[type=checkbox]:checked").each(function(key, value) {
@@ -117,7 +140,10 @@ define(['jquery',
               dataType: 'json',
               data: {functionname: 'createGroup', arguments: ["null", this.userName, "null", "createGroup", text]}
       });
-
+    },
+    slideMenu: function(e){
+     var t = $(e.target).siblings()[0];
+     $(t).slideToggle();
     }
   });
 

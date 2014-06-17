@@ -85,7 +85,7 @@ define(['jquery',
               url: "backend/init.php",
               dataType: 'json',
               data: {functionname: 'getGroups', arguments: ["null", this.userName, "null", "getGroups"]},
-      })).then(function(data){
+        })).then(function(data){
           
            _.each(data[0], function(value){
                      that.groupTemp =  _.template(groupsTemp, {data: value});
@@ -98,7 +98,7 @@ define(['jquery',
                   group = value.GroupName,
                   target = $(".groupWrapper").children("."+group);
                   if(group !== null){
-                    $(Ttarget).append(dropDownTemp);
+                    //$(Ttarget).append(dropDownTemp);
                   }
           });//end each
           _.each($(".groupWrapper"), function(value, key){
@@ -134,7 +134,7 @@ define(['jquery',
       e.preventDefault();
       var text = $(".createGroupInput").val();
      $(".groups").append(text);
-       jQuery.ajax({
+       $.ajax({
               type: "POST",
               url: "backend/init.php",
               dataType: 'json',
@@ -144,6 +144,29 @@ define(['jquery',
     slideMenu: function(e){
      var t = $(e.target).siblings()[0];
      $(t).slideToggle();
+
+
+     /*
+  /*
+      $.ajax({
+                type: "GET",
+                url: "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&output=json_xml&callback=?&q="+encodeURIComponent(data.links),
+                dataType: 'jsonp',
+                success: function (data) {
+                 // console.log(data);
+                  if(data.responseStatus === 200){
+                    var feedItems = data.responseData.feed.entries;
+                    _.each(feedItems, function(value, key){
+                      that.feedDates.push(value);
+                     
+                    //  console.log(value);
+                    }); 
+                  }//end if
+                  // that.sortDate(feedItems); 
+               }
+
+            });//end ajax
+     */
     }
   });
 

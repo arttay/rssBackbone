@@ -74,3 +74,19 @@
 .groupDropDown {
   display: none;
 }
+
+#feedData .groups {
+  float: left !important;
+}
+#feedData .groups ul {
+  list-style-type: none;
+}
+#feedData .groups li {
+  display: inline;
+  font-size: 2em;
+  margin-right: 15px;
+  cursor: pointer;
+}
+#feedData .groups li.active {
+  background-color: #ccc;
+}

@@ -68,7 +68,23 @@
 .groupDropDown {
 	display: none;
 }
-
+#feedData {
+	.groups {
+		float:left !important; 
+		ul {
+			list-style-type: none;
+		}
+		li {
+			display: inline;
+			font-size: 2em;
+			margin-right: 15px;
+			cursor: pointer;
+			&.active {
+				background-color: #ccc;
+			}
+		}//end li
+	}//end groups
+}//end feed data
 
 
 

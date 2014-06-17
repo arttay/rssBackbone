@@ -12,6 +12,7 @@ define(['jquery',
   "text!templates/layoutTemplate.html",
   "text!templates/previousRss.html",
   "text!templates/phpTemp.php",
+  "text!templates/main/mainGroups.html",
 
   ], function
 	(
@@ -26,21 +27,53 @@ define(['jquery',
   entryTemplate,
   layoutTemplate,
   previousRss,
-  phpTemp
+  phpTemp,
+  groupTemp
 	)  {
   var MainView = Backbone.View.extend({
     el: $('body'),
      events: {
         "click .sub" : "formSub",
         "click .itemObject" : "slideSection",
-        "click .previousRss li" : "previousItem"
+        "click .previousRss li" : "previousItem",
+        "click .groups ul li" : "groupsNav",
+        "randomevent": "testCall",
     },
     template: _.template(html),
     mainTemplate: _.template(mainHtml),
     phpTemp: _.template(phpTemp),
     initialize: function() { 
+      
+     
       this.userName = location.hash.split("/")[1];
       this.render();
+      this.loadGroups();
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     },
     render: function(data){
       $("#main").html(this.mainTemplate());
@@ -59,7 +92,7 @@ define(['jquery',
         }
       this.setUserInfo(userInfo);
       this.getRss(feedUrl);
-      jQuery.ajax({
+      $.ajax({
               type: "POST",
               url: "backend/init.php",
               dataType: 'json',
@@ -67,7 +100,7 @@ define(['jquery',
               success: function (data) {
                 console.log(data);               
              }
-      });
+      });//end ajax
     },
     getRss: function(feedUrl){
       $("#feedData").empty();
@@ -114,8 +147,123 @@ define(['jquery',
       e.preventDefault();
       var clicked = e.currentTarget.innerText;
       this.getRss(clicked);
+    },
+    loadGroups: function(){
+      var that = this;
+       $.ajax({
+              type: "POST",
+              url: "backend/init.php",
+              dataType: 'json',
+              data: {functionname: 'getGroups', arguments: ["null", this.userName, "null", "getGroups"]},
+              success: function (data) {
+                if(data[0] !== 0) {  
+                  that.domGroups(data);   
+                } else {
+
+                } //end if else       
+             }//end success
+        });
+    },
+    domGroups: function(data){
+      var that = this;
+      that.d = $.Deferred();
+      that.feedDates = [];
+      groupTemp = _.template(groupTemp, {data: data[0]});
+      $("#feedData").append(groupTemp);
+
+      that.d.done(function(data){
+        console.log(that.feedDates.length);
+      });
+      
+
+      $(data[1]).each(function(key, value){
+        that.whenAjax(value, key);
+      }).promise().done( function(){
+          //that.d.resolve();
+
+      });
+
+
+      /*
+      _.each(data[1], function(value, key){
+          that.whenAjax(value, key)
+        }).done(function(){
+          console.log("ldfhjg");
+        });
+*/
+
+    },
+    whenAjax: function(data, key){
+      var that = this,
+          feed = new google.feeds.Feed(data.links);
+       
+
+          feed.load(function(data) {
+
+            var entries = data.feed.entries;
+            _.each(entries, function(value, key){
+              that.feedDates.push(value.publishedDate);
+            });
+         
+              return that.d.resolve();  
+          });//end feed load
+
+  /*
+      _.each(data[1], function(value, key){
+        var feed = new google.feeds.Feed(value.links);
+        feed.load(function(data) {
+          var entries = data.feed.entries;
+          _.each(entries, function(value, key){
+            that.feedDates.push(value.publishedDate);
+          });
+          return d.resolve();  
+        });//end feed load
+      });//end each
+     return de.resolve();  
+     */
+
+
+    },
+    groupsNav: function(e){
+      var clicked = e.target.classList.length;
+
+      if(clicked == 1) {
+        $(e.target).removeClass("active");
+      } else {
+        $(".active").removeClass("active");
+        $(e.target).addClass("active");
+      }//end else 
+    },//end groupnac
+    sortDate: function(data){
+      var that = this;
+
+     
+
+
+
+      _.each(data, function(value, key){
+        console.log(value);
+          var date = value.publishedDate,
+              formatedDate = new Date(value.publishedDate),
+              newDate = Date.parse(formatedDate);
+          that.dateArray.push(formatedDate);
+      }); 
+
+       var sortDate = _.sortBy(this.dateArray, function (name) {return name}); 
+    
+     
+
+    },
+    toDate: function(o){
+          var parts = o.startDate.split('-');
+          o.startDate = new Date(parts[0], parts[1] - 1, parts[2]);
+          return o;
+    },
+    descStartTime: function(o){
+       return -o.startDate.getTime();
     }
   });
 
   return MainView;
 });
+

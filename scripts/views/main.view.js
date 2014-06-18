@@ -6,6 +6,7 @@ define(['jquery',
   'collections/main.collection', 
   "rss",
   "rssHelper",
+  "async",
   "text!templates/itemTemp.html",
   "text!templates/main.html",
   "text!templates/entryTemplate.html",
@@ -22,6 +23,7 @@ define(['jquery',
   collection,
   rss,
   rssHelper,
+  async,
   html,
   mainHtml,
   entryTemplate,
@@ -48,32 +50,6 @@ define(['jquery',
       this.userName = location.hash.split("/")[1];
       this.render();
       this.loadGroups();
-
-
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     },
     render: function(data){
       $("#main").html(this.mainTemplate());
@@ -167,62 +143,33 @@ define(['jquery',
     domGroups: function(data){
       var that = this;
       that.d = $.Deferred();
+      that.de = $.Deferred();
       that.feedDates = [];
+      that.itemsLen = data[1].length - 1;
       groupTemp = _.template(groupTemp, {data: data[0]});
+
       $("#feedData").append(groupTemp);
 
-      that.d.done(function(data){
-        console.log(that.feedDates.length);
+      that.d.done(function(){
+        that.sortDate(that.feedDates);
       });
-      
-
       $(data[1]).each(function(key, value){
         that.whenAjax(value, key);
-      }).promise().done( function(){
-          //that.d.resolve();
-
       });
-
-
-      /*
-      _.each(data[1], function(value, key){
-          that.whenAjax(value, key)
-        }).done(function(){
-          console.log("ldfhjg");
-        });
-*/
-
     },
     whenAjax: function(data, key){
       var that = this,
           feed = new google.feeds.Feed(data.links);
-       
-
           feed.load(function(data) {
-
             var entries = data.feed.entries;
             _.each(entries, function(value, key){
               that.feedDates.push(value.publishedDate);
             });
-         
+            //console.log(key);
+            if(key == that.itemsLen){
               return that.d.resolve();  
+            }
           });//end feed load
-
-  /*
-      _.each(data[1], function(value, key){
-        var feed = new google.feeds.Feed(value.links);
-        feed.load(function(data) {
-          var entries = data.feed.entries;
-          _.each(entries, function(value, key){
-            that.feedDates.push(value.publishedDate);
-          });
-          return d.resolve();  
-        });//end feed load
-      });//end each
-     return de.resolve();  
-     */
-
-
     },
     groupsNav: function(e){
       var clicked = e.target.classList.length;
@@ -236,20 +183,23 @@ define(['jquery',
     },//end groupnac
     sortDate: function(data){
       var that = this;
-
-     
-
+      that.dateArray = [];
 
 
+   
       _.each(data, function(value, key){
-        console.log(value);
-          var date = value.publishedDate,
-              formatedDate = new Date(value.publishedDate),
+        //console.log(value);
+          var date = value,
+              formatedDate = new Date(date),
               newDate = Date.parse(formatedDate);
+          
           that.dateArray.push(formatedDate);
+     
       }); 
 
+      console.log("**********************************************************")
        var sortDate = _.sortBy(this.dateArray, function (name) {return name}); 
+       console.log(sortDate);
     
      
 

@@ -25,6 +25,9 @@ require.config({
     "rssHelper": {
             deps: ['jquery']
     },
+    "async": {
+       exports: 'async'
+    }
   },
   paths: {
     jquery: "vendor/jquery/jquery",
@@ -39,6 +42,7 @@ require.config({
     toJson: "helpers/xmlToJson",
     rss : "helpers/rss",
     rssHelper: "helpers/rssHelper",
+    async: "vendor/async/async"
 
   }
 

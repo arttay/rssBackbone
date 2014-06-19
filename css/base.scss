@@ -65,9 +65,7 @@
 		border: 1px solid #000;
 	}
 }
-.groupDropDown {
-	display: none;
-}
+
 #feedData {
 	.groups {
 		float:left !important; 
@@ -85,7 +83,15 @@
 		}//end li
 	}//end groups
 }//end feed data
-
+.dynamicGroupHeader {
+	height: 100px;
+}
+.groupActive {
+	display: block;
+}
+.groupContent {
+	display: none;
+}
 
 
 

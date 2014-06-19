@@ -1,5 +1,6 @@
 //http://smodcast.com/channels/smodcast/feed/
 //http://www.gamerswithjobs.com/taxonomy/term/408/0/feed
+//http://onelifeleft.libsyn.com/rss
 define(['jquery', 
   'underscore', 
   'backbone', 
@@ -13,8 +14,7 @@ define(['jquery',
   "text!templates/layoutTemplate.html",
   "text!templates/previousRss.html",
   "text!templates/phpTemp.php",
-  "text!templates/main/mainGroups.html",
-
+  "text!templates/main/mainGroups.html"
   ], function
 	(
 	$,
@@ -141,6 +141,7 @@ define(['jquery',
         });
     },
     domGroups: function(data){
+ 
       var that = this;
       that.d = $.Deferred();
       that.de = $.Deferred();
@@ -148,7 +149,15 @@ define(['jquery',
       that.itemsLen = data[1].length - 1;
       groupTemp = _.template(groupTemp, {data: data[0]});
 
-      $("#feedData").append(groupTemp);
+      //dynamicGroup
+      _.each(data[0], function(value){
+          $(".dynamicGroup").append("<div class='"+value +"Group groupContent'></div>");
+      });
+
+
+      $(".dynamicGroupHeader").append(groupTemp); 
+     $(".groups ul li:first-child").addClass("active");
+     
 
       that.d.done(function(){
         that.sortDate(that.feedDates);
@@ -158,59 +167,79 @@ define(['jquery',
       });
     },
     whenAjax: function(data, key){
+
       var that = this,
-          feed = new google.feeds.Feed(data.links);
+          feed = new google.feeds.Feed(data.links),
+          groupName = data.GroupName;
+          feed.setResultFormat(google.feeds.Feed.MIXED_FORMAT);
+         
+
           feed.load(function(data) {
-            var entries = data.feed.entries;
+            var xmlInnerHtml = data.xmlDocument.children[0].innerHTML,
+                enclose = $(xmlInnerHtml).find("enclosure"),
+                url = $(enclose)[0].getAttribute("url"),
+                entries = data.feed.entries;
+        
             _.each(entries, function(value, key){
-              that.feedDates.push(value.publishedDate);
+              var item = new Object();
+                  item.date = value.publishedDate;
+                  item.title = value.title;
+                  item.description = value.content;
+                  item.link = value.link;
+                  item.group = groupName;
+                  item.url = $(enclose)[key].getAttribute("url");
+             
+                  if(item.group !== "null"){
+                     that.feedDates.push(item);
+                  }
+             
             });
-            //console.log(key);
             if(key == that.itemsLen){
               return that.d.resolve();  
             }
           });//end feed load
     },
     groupsNav: function(e){
-      var clicked = e.target.classList.length;
+      var clicked = e.target.classList.length,
+          that = this,
+          activeGroup = $(".active")[0].classList[0].split("Header")[0];
+   
 
-      if(clicked == 1) {
-        $(e.target).removeClass("active");
+          
+      if(clicked == 2) {
       } else {
+        var currentTarget = e.target.classList[0].split("Header")[0];
         $(".active").removeClass("active");
+        $("."+activeGroup+"Group").css("display", "none");
         $(e.target).addClass("active");
+        $("."+currentTarget+"Group").css("display", "block");
       }//end else 
     },//end groupnac
     sortDate: function(data){
-      var that = this;
-      that.dateArray = [];
+      var that = this,
+          activeGroup = $(".active")[0].classList[0].split("Header")[0];
+          that.dateArray = [];
 
-
-   
       _.each(data, function(value, key){
-        //console.log(value);
-          var date = value,
+          var date = value.date,
               formatedDate = new Date(date),
               newDate = Date.parse(formatedDate);
-          
-          that.dateArray.push(formatedDate);
-     
+              value.date = formatedDate;
+          that.dateArray.push(value);
       }); 
+       var sortDate = _.sortBy(this.dateArray, 'date'); 
+       _.each(sortDate, function(value, key){
+           $("."+value.group+"Group").append(that.template(value));
+       });
+       $("."+activeGroup+"Group").css("display", "block");
 
-      console.log("**********************************************************")
-       var sortDate = _.sortBy(this.dateArray, function (name) {return name}); 
-       console.log(sortDate);
+
+       
+       
     
-     
+    },
+    clickLoadGroup: function(){
 
-    },
-    toDate: function(o){
-          var parts = o.startDate.split('-');
-          o.startDate = new Date(parts[0], parts[1] - 1, parts[2]);
-          return o;
-    },
-    descStartTime: function(o){
-       return -o.startDate.getTime();
     }
   });
 

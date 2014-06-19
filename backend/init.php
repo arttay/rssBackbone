@@ -18,7 +18,7 @@
               getElems($userName);
           break;
         case "delete":
-              deleteDB($feed);
+              deleteDB($feed, $userName);
           break;
         case "createGroup":
               createGroup($userName, $groupName, $feed);
@@ -43,7 +43,7 @@
     include_once "database/find.php";
     echo json_encode($myArray);
   }
-  function deleteDB($feed) {
+  function deleteDB($feed, $userName) {
     include_once "database/initDb.php";
     include_once "database/delete.php";
   }

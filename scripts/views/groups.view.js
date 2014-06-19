@@ -1,5 +1,6 @@
 //http://smodcast.com/channels/smodcast/feed/
 //http://www.gamerswithjobs.com/taxonomy/term/408/0/feed
+//http://onelifeleft.libsyn.com/rss
 define(['jquery', 
   'underscore', 
   'backbone',
@@ -93,12 +94,26 @@ define(['jquery',
           });//end each
         
           _.each(data[1], function(value, key){
-            dropDownTemp = _.template(dropDownGroup);
+            console.log(value);
+            dropDownTemp = _.template(dropDownGroup, {value: value});
+
+
+
+
+
+
+
+
+
               var link = value.links,
                   group = value.GroupName,
-                  target = $(".groupWrapper").children("."+group);
+                  target = $(".groupWrapper").children("."+group),
+                  Ttarget = target.parents(),
+                  rTarget = Ttarget[0];
+                  
                   if(group !== null){
-                    //$(Ttarget).append(dropDownTemp);
+                    console.log(rTarget);
+                    $(rTarget).append(dropDownTemp);
                   }
           });//end each
           _.each($(".groupWrapper"), function(value, key){
@@ -119,6 +134,7 @@ define(['jquery',
         }); //end then
     },
     delete: function(){
+      var that = this;
       $("input[type=checkbox]:checked").each(function(key, value) {
             $(value).parent()[0].remove();
              var dataValue = $(value).data("link");
@@ -126,7 +142,7 @@ define(['jquery',
                 type: "POST",
                 url: "backend/init.php",
                 dataType: 'json',
-                data: {functionname: 'deleteDB', arguments: [dataValue, "null", "null", "delete"]},
+                data: {functionname: 'deleteDB', arguments: [dataValue, that.userName, "null", "delete"]},
               });//end ajax
       });//end each input 
     },//end delete

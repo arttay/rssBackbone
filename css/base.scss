@@ -92,7 +92,12 @@
 .groupContent {
 	display: none;
 }
-
+.groupWrapper {
+	input[type=checkbox]{
+		float: left;
+		margin-top: 2%;
+	}
+}
 
 
 

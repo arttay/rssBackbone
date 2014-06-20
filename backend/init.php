@@ -29,6 +29,12 @@
         case "getGroups":
               getGroups($userName);
           break;
+        case "updateGroup":
+              updateGroup($feed, $userName);
+          break;
+        case "deleteGroup":
+              deleteGroup($feed, $userName);
+          break;
 
           
       }
@@ -58,14 +64,17 @@
   function getGroups($userName){
     include_once "database/initDb.php";
     include_once "database/getGroups.php"; 
-    //echo json_encode($groupsArray);
-   // echo json_encode($itemsArray);  
     echo json_encode($resp);  
-
-    
-
   }
-
+  function updateGroup($feed, $userName){
+    include_once "database/initDb.php";
+    include_once "database/updateGroup.php"; 
+  }
+  function deleteGroup($feed, $userName){
+    include_once "database/initDb.php";
+    include_once "database/deleteGroup.php"; 
+    echo json_encode($art);
+  }
 
 
 ?>

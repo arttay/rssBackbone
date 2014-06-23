@@ -13,10 +13,15 @@ define(['jquery', 'underscore', 'backbone', 'models/main.model'], function
               
             },
             sync: function(method, model, options){
-            	   options.timeout = 10000;
-   					 options.dataType = 'json';
-   					 //options.jsonp = "jsonp";
-   					 options.crossDomain = true;
+            options.timeout = 10000;
+   					options.dataType = 'json';
+   					//options.jsonp = "jsonp";
+   					options.crossDomain = true;
+            options.data = "";
+            options.url = "";
+            options.type = "";
+
+
    					  return Backbone.sync(method, model, options);
 
             },

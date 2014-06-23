@@ -157,6 +157,9 @@ define(['jquery',
                     dataLink = $(item).data("link"),
                     droppedTarget = event.target;
                     $(droppedTarget).append(dataLink);//fix this
+                    var wrapElement = $(droppedTarget)[0].lastChild;
+                    $(wrapElement).wrap("<div></div>");
+                    //.wrapAll("<div class='groupDropDown'></div>");
                 $.ajax({
                     type: "POST",
                     url: "backend/init.php",
@@ -187,10 +190,12 @@ define(['jquery',
           dataArray = [],
           that = this;
           this.linkArray = []; 
-      _.each(data, function(value, key){
-          dataArray.push($(value).data("group"));
 
+      _.each(data, function(value, key){
+          dataArray.push($(value).data("group")); //groups
+          console.log(value);
       });
+
       _.each(dataArray, function(value, key){
          var group = $("."+value).siblings()[0],
             groupPara = $(group).find("p");
@@ -223,7 +228,9 @@ define(['jquery',
               }
             });//end ajax*/
       });//end each*/
+console.log(that.linkArray);
       _.each(that.linkArray, function(value, key){
+
         $.ajax({
               type: "POST",
               url: "backend/init.php",
@@ -239,6 +246,9 @@ define(['jquery',
      });
     },//end delete group
     getGroups: function(){
+
+    },
+    updateGroupLink: function(){
 
     }
   });

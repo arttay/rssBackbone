@@ -23,7 +23,6 @@ Namespace contains all the custom css written by Digital River. Whenever you wri
 
 To add a new page or namespace
 1.	 Add a div or another markup element with an id within the naming convention to the dust view file `<html><body><div id=”fullCart”></div>`
-
 2.	In namespace.scss add a selector for your id and inside that selector import the file that contains the sass file for your page/component. `#footer {@import "footer/footer";}`
 
 To add a new theme to the display manager: 

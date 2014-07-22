@@ -22,10 +22,12 @@ PdpTabs is the tab system component.
 Namespace contains all the custom css written by Digital River. Whenever you write any new css for any pages for UIRuntime, it must go into the correct namespace. That is, if you were to add a selector to the full cart page, it must go under `namespace/cart/full`
 
 To add a new page or namespace
+
 1.	 Add a div or another markup element with an id within the naming convention to the dust view file `<html><body><div id=”fullCart”></div>`
 2.	In namespace.scss add a selector for your id and inside that selector import the file that contains the sass file for your page/component. `#footer {@import "footer/footer";}`
 
 To add a new theme to the display manager: 
+
 1.	Open the GCPrimeSiteTool under `views/page/site-config.dust`
 2.	The will be a set of options with the names of the current themes.
 3.	Add the following code to the end of the options list

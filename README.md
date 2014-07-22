@@ -27,6 +27,4 @@ Namespace contains all the custom css written by Digital River. Whenever you wri
 
 To add a new page or namespace, add div or other markup element with an id within the naming convention to the dust view file, then in namespace.scss add a selector for your id and inside that selector import the file that contains the sass file for your page/component.
 
-#footer {
-  @import "footer/footer";
-}
+`#footer {@import "footer/footer";}`

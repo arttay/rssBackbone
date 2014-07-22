@@ -1,7 +1,7 @@
 The CSS used in UIRuntime uses scss as it’s precompiler. All pre-compiled scss can be found in the scss folder, the scss for bootstrap (mixins, functions and general scss) can be found under `vendor/bootstrap-sass/vendor/stylesheets` and all compiled css can be found under `public/stylesheets`.
 `Main.scss` is where all scss is compiled from, and no scss is to be written in it. You must import a stylesheet into `main.scss`: `@import "namespace/namespace";`
 You do not need to add a file extension to the end (you can if you want to though);
-All responsive scss must go in responsive.scss
+All responsive scss must go in `responsive.scss`
 The scss contains theme files (slate, spring), components and namespaces.
 Theme files are for the various skins that clients can choose from. Each theme directory contains 3 files: 
 
@@ -13,7 +13,7 @@ Theme files are for the various skins that clients can choose from. Each theme d
 
 
 
-95% of the time you will not need to edit any of the css in any of the above files.
+Most of the time you will not need to edit any of the css in any of the above files.
 
 Components contains the scss for all the custom components created by Digital River (and some overrides)
 The objects folder contains html/css design pattern css (such as the media object)

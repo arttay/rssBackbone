@@ -1,6 +1,6 @@
 The CSS used in UIRuntime uses scss as it’s precompiler. All pre-compiled scss can be found in the scss folder, the scss for bootstrap (mixins, functions and general scss) can be found under vendor/bootstrap-sass/vendor/stylesheets and all compiled css can be found under public/stylesheets.
 
-Main.scss is where all scss is compiled from, and no scss is to be written in it. You must import a stylesheet into main.scss: @import "namespace/namespace";
+Main.scss is where all scss is compiled from, and no scss is to be written in it. You must import a stylesheet into main.scss: `@import "namespace/namespace";`
 
 You do not need to add a file extension to the end (you can if you want to though);
 All responsive scss must go in responsive.scss

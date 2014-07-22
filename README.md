@@ -9,7 +9,7 @@ Theme files are for the various skins that clients can choose from. Each theme d
 1. _bootswatch, _variables, bootstrap and sometimes _test-vars.scss
 2. Bootswatch contains all something…I don’t know
 3. Variables contains all sass variables that will be used by bootstrap on compile. Variables include background color, hyperlink colors, navigation colors and text color.
-4.Bootstrap is similar to main.scss, in that it compiles all the files for the theme.
+4. Bootstrap is similar to main.scss, in that it compiles all the files for the theme.
 
 
 

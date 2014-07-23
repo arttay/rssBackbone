@@ -6,10 +6,10 @@ The css used in UIRuntime uses scss as it’s precompiler. All pre-compiled scss
 
 You do not need to add a file extension to the end (you can if you want to though);
 All responsive scss must go in `responsive.scss`
-The scss file contains theme files (slate, spring), components and namespaces.
-Theme files are for the various skins that clients can choose from. Each theme directory contains 3 files: _bootswatch, _variables and bootstrap.scss
+The scss contains theme files (slate, spring), components and namespaces.
+Theme files are for the various skins that clients can choose from. Each theme directory contains 3 files: _bootswatch, _variables, bootstrap and sometimes _test-vars.scss
 
-1. Bootswatch contains all something…I don’t know
+1. Bootswatch contains override css for that specific theme.
 2. Variables contains all sass variables that will be used by bootstrap on compile. Variables include background color, hyperlink colors, navigation colors and text color.
 3. Bootstrap is similar to main.scss, in that it compiles all the files for the theme.
 

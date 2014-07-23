@@ -93,7 +93,7 @@ We have a few mixins at the moment that you can use in your css work:
 5.	Transition: mixin used for transitions/animations. Example:
 ```css
 .foo { @include transform(0.3s); }
-	```
+```
 
 ##extensions 
 Extensions are one of the most important parts of scss in regards to the DRY/OOCSS methodologies. The general principal is inheritance; that is if you have the following class: `.marginRight { margin-right: 5px; }` and you have 5 other class that have a margin right of 5px you can use the following: `.fooOtherClass { @extend .marginRight; }`. The reason you would use this method over including several classes in a selector deals mostly with complexity and the way that you write sass. For example, it would be much easier to use this method in the following css: 

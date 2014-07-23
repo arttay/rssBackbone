@@ -97,13 +97,16 @@ Output:
 ```css
 .foo { @include opacity(0.8); }
 ```
+
 Output:
+
 ```css
   opacity: 0.8;
   filter: alpha(opacity=0.8);
+```
 
 4.	Transform: mixin used to transform elements. Example:
-5.	
+
 ```css 
 .foo { @include transform(1.1); }
 ```

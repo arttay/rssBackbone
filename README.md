@@ -33,7 +33,7 @@ To add a new page or namespace
 ```
 2.	In namespace.scss add a selector for your id and inside that selector import the file that contains the sass file for your page/component. 
 ```css
-#footer {@import "footer/footer";}
+#fullCart {@import "fullCart/fullCart";}
 ```
 
 To add a new theme to the display manager: 

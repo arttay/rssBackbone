@@ -89,7 +89,8 @@ Extensions are one of the most important parts of scss in regards to the DRY/OOC
       }
     }
   }
-}```
+}
+```
 
 
 Over the following css

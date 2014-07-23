@@ -89,7 +89,10 @@ Extensions are one of the most important parts of scss in regards to the DRY/OOC
       }
     }
   }
-}Over the following css
+}```
+
+
+Over the following css
 `.prod-quantity .btn .glyphicon-refresh:before, .prod-quantity .btn .glyphicon-trash:before { margin-right: 5px;}`
 
 The latter would get progressively more complex if you wanted to add more selectors over time and remove selectors that no longer existed. 

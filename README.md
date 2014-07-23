@@ -1,6 +1,9 @@
-
 The css used in UIRuntime uses scss as it’s precompiler. All pre-compiled scss can be found in the scss folder, the scss for bootstrap (mixins, functions and general scss) can be found under `vendor/bootstrap-sass/vendor/stylesheets` and all compiled css can be found under `public/stylesheets`.
-`Main.scss` is where all scss is compiled from, no scss is to be written in it. You must import a stylesheet into `main.scss`: `@import "namespace/namespace";`
+`Main.scss` is where all scss is compiled from, no scss is to be written in it. You must import a stylesheet into `main.scss`: 
+```sass
+@import "namespace/namespace";
+```
+
 You do not need to add a file extension to the end (you can if you want to though);
 All responsive scss must go in `responsive.scss`
 The scss contains theme files (slate, spring), components and namespaces.
@@ -24,15 +27,23 @@ Namespace contains all the custom css written by Digital River. Whenever you wri
 
 To add a new page or namespace
 
-1.	 Add a div or another markup element with an id within the naming convention to the dust view file `<html><body><div id=”fullCart”></div>`
-2.	In namespace.scss add a selector for your id and inside that selector import the file that contains the sass file for your page/component. `#footer {@import "footer/footer";}`
+1.	 Add a div or another markup element with an id within the naming convention to the dust view file 
+```html
+<html><body><div id=”fullCart”></div>
+```
+2.	In namespace.scss add a selector for your id and inside that selector import the file that contains the sass file for your page/component. 
+```css
+#footer {@import "footer/footer";}
+```
 
 To add a new theme to the display manager: 
 
 1.	Open the GCPrimeSiteTool under `views/page/site-config.dust`
 2.	The will be a set of options with the names of the current themes.
 3.	Add the following code to the end of the options list
-` <option value="<%themeName%>"{@if cond="'{site.template.presentationCss}' == '<%themeName%>'"} selected{/if}><%themeName%></option>`
+```html
+<option value="<%themeName%>"{@if cond="'{site.template.presentationCss}' == '<%themeName%>'"} selected{/if}><%themeName%></option>
+```
 
 Because bootstrap makes up a good portion of our css, we also have html partials. The various html/dust partials are located at views/components.
 Currently we have 
@@ -54,17 +65,28 @@ If you want to create a sass file that you will import into `main.scss` or anoth
 ##mixins 
 Mixins are similar to function in programming, expect that they return a block of css.
 ###general usage:
-`.foo{ @include border-radius(5px); }`
+```sass
+.foo{ @include border-radius(5px); }
+```
 Or if you wanted to use it as the value to a property:
-`.foo { font-size: size(5px);`
+```sass
+.foo { font-size: size(5px);
+```
 ###current mixins 
 We have a few mixins at the moment that you can use in your css work:
-1.	Border-radius: outputs a border radius based for all sides, with vendor prefixes. 
-Example: `.foo{ @include border-radius(5px); }`
+1.	Border-radius: outputs a border radius based for all sides, with vendor prefixes. Example:
+ ```css
+.foo{ @include border-radius(5px); }
+```
 2.	Clearfix: a general mixin that clears floats. Example: 
-`.foo { @include clearfix(); }`
+```css
+.foo { @include clearfix(); }
+```
 3.	Opacity: another general mixin that outputs opacity values. Example:
-`.foo { @include opacity(0.8);}`
+```css
+.foo { @include opacity(0.8);}
+```
+
 ##extensions 
 Extensions are one of the most important parts of scss in regards to the DRY/OOCSS methodologies. The general principal is inheritance; that is if you have the following class: `.marginRight { margin-right: 5px; }` and you have 5 other class that have a margin right of 5px you can use the following: `.fooOtherClass { @extend .marginRight; }`. The reason you would use this method over including several classes in a selector deals mostly with complexity and the way that you write sass. For example, it would be much easier to use this method in the following css: 
 
@@ -90,13 +112,15 @@ Extensions are one of the most important parts of scss in regards to the DRY/OOC
     }
   }
 }
-```
-
-
+````
 Over the following css
 ```css
 .prod-quantity .btn .glyphicon-refresh:before, .prod-quantity .btn .glyphicon-trash:before { margin-right: 5px;}
 ```
 
-The latter would get progressively more complex if you wanted to add more selectors over time and remove selectors that no longer existed. 
+What happens when the sass gets compiled is, everything that is extended with margin right gets set aside and put into a new selector that is similar to the above css, while everything else is compiled into the selectors that they’re nested in.
+The latter would get progressively more complex if you wanted to add more selectors over time and remove selectors that no longer exist. 
+
 The sass above actually compiles into the latter css, but it’s much easier to navigate.
+
+

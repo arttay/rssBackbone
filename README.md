@@ -1,4 +1,5 @@
-`.marginRight {margin-right: 5px;} .prod-quantity {
+```sass
+.marginRight {margin-right: 5px;} .prod-quantity {
   .btn {
     .glyphicon-refresh {
       &:before {
@@ -11,5 +12,5 @@
       }
     }
   }
-}`
+}```
 

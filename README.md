@@ -120,7 +120,32 @@ Over the following css
 
 What happens when the sass gets compiled is, everything that is extended with margin right gets set aside and put into a new selector that is similar to the above css, while everything else is compiled into the selectors that they’re nested in.
 The latter would get progressively more complex if you wanted to add more selectors over time and remove selectors that no longer exist. 
-
 The sass above actually compiles into the latter css, but it’s much easier to navigate.
+
+###placeholder selectors 
+To continue with the above, one of the biggest downfalls is that the .marginRight class is compiled into the css, and if you have several of these types of classes, it can seriously inflate your stylesheets. The placeholder selector deals nicely with this; it is almost exactly the same as a normal css class, but it is prefixed with a percent symbol(%), and outside of what you’ve extended, is thrown away on compile.
+Example 
+```sass
+%marginRight {
+  margin-right: 5px;
+} 
+.prod-quantity {
+  .btn {
+    .glyphicon-refresh {
+      &:before {
+        @extend %marginRight;
+      }
+    }
+    .glyphicon-trash {
+      &:before {
+        @extend %marginRight;
+      }
+    }
+  }
+}
+````
+
+
+
 
 

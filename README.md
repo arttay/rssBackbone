@@ -63,20 +63,20 @@ To include an html/dust partial in your own dust file (it must be a dust file): 
 If you want to create a sass file that you will import into `main.scss` or another file that will aggregate several files, prefix that file with an underscore. When you compile sass files, unless you prefix a file with an underscore, a new css file will be generated.
 
 ##mixins 
-Mixins are similar to function in programming, expect that they return a block of css.
+Mixins are similar to functions in programming, expect that they return a block of css.
 ###general usage:
 ```sass
 .foo{ @include border-radius(5px); }
 ```
 Or if you wanted to use it as the value to a property:
 ```sass
-.foo { font-size: size(5px);
+.foo { font-size: size(5px); }
 ```
 ###current mixins 
 We have a few mixins at the moment that you can use in your css work:
 1.	Border-radius: outputs a border radius based for all sides, with vendor prefixes. Example:
  ```css
-.foo{ @include border-radius(5px); }
+.foo { @include border-radius(5px); }
 ```
 2.	Clearfix: a general mixin that clears floats. Example: 
 ```css
@@ -84,7 +84,7 @@ We have a few mixins at the moment that you can use in your css work:
 ```
 3.	Opacity: another general mixin that outputs opacity values. Example:
 ```css
-.foo { @include opacity(0.8);}
+.foo { @include opacity(0.8); }
 ```
 
 ##extensions 

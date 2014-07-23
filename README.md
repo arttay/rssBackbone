@@ -96,13 +96,16 @@ Output:
 ```css
 .foo { @include opacity(0.8); }
 ```
+
 Output:
+
 ```css
   opacity: 0.8;
   filter: alpha(opacity=0.8);
+```
 
 4.	Transform: mixin used to transform elements. Example:
-5.	
+
 ```css 
 .foo { @include transform(1.1); }
 ```
@@ -118,6 +121,7 @@ Output:
 
 
 5.	Darken/Lighten: these are base bootstrap mixins that make a color lighter or darker. Example: 
+
 ```sass
 lighten(<base color>, <percent by);
 ```
@@ -149,7 +153,9 @@ Extensions are one of the most important parts of scss in regards to the DRY/OOC
   }
 }
 ````
+
 Over the following css
+
 ```css
 .prod-quantity .btn .glyphicon-refresh:before, .prod-quantity .btn .glyphicon-trash:before { margin-right: 5px;}
 ```

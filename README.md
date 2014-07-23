@@ -1,4 +1,4 @@
-Note: Unless otherwise stated, all file are located in the UIRuntime project.     return      
+Note: Unless otherwise stated, all file are located in the UIRuntime project.          
 The css used in UIRuntime uses scss as it’s precompiler. All pre-compiled scss can be found in the scss folder, the scss for bootstrap (mixins, functions and general scss) can be found under `public/vendor/bootstrap-sass/vendor/stylesheets` and all compiled css can be found under `public/stylesheets`.
 `Main.scss` is where all scss is compiled from, no scss is to be written in it. You must import a stylesheet into `main.scss`: 
 ```sass

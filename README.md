@@ -121,6 +121,7 @@ Output:
 ```sass
 lighten(<base color>, <percent by);
 ```
+
 Base color is the starting color you want and the percent is how much the mixing will distort the color by. Darken works the exact same way.
 ##extensions 
 Extensions are one of the most important parts of scss in regards to the DRY/OOCSS methodologies. The general principal is inheritance; that is if you have the following class: `.marginRight { margin-right: 5px; }` and you have 5 other class that have a margin right of 5px you can use the following: `.fooOtherClass { @extend .marginRight; }`. The reason you would use this method over including several classes in a selector deals mostly with complexity and the way that you write sass. For example, it would be much easier to use this method in the following css: 

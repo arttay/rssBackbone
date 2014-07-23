@@ -102,16 +102,20 @@ Output:
   filter: alpha(opacity=0.8);
 
 4.	Transform: mixin used to transform elements. Example:
+5.	
 ```css 
-	.foo { @include transform(1.1); }
+.foo { @include transform(1.1); }
 ```
+
 Output:
+
 ```css
   -webkit-transform: scale(1.1);
   -moz-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.1);
 ```
+
 
 5.	Darken/Lighten: these are base bootstrap mixins that make a color lighter or darker. Example: 
 ```sass

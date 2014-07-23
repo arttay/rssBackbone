@@ -1,4 +1,5 @@
-The css used in UIRuntime uses scss as it’s precompiler. All pre-compiled scss can be found in the scss folder, the scss for bootstrap (mixins, functions and general scss) can be found under `vendor/bootstrap-sass/vendor/stylesheets` and all compiled css can be found under `public/stylesheets`.
+Note: Unless otherwise stated, all file are located in the UIRuntime project.
+The css used in UIRuntime uses scss as it’s precompiler. All pre-compiled scss can be found in the scss folder, the scss for bootstrap (mixins, functions and general scss) can be found under `public/vendor/bootstrap-sass/vendor/stylesheets` and all compiled css can be found under `public/stylesheets`.
 `Main.scss` is where all scss is compiled from, no scss is to be written in it. You must import a stylesheet into `main.scss`: 
 ```sass
 @import "namespace/namespace";
@@ -9,9 +10,9 @@ All responsive scss must go in `responsive.scss`
 The scss contains theme files (slate, spring), components and namespaces.
 Theme files are for the various skins that clients can choose from. Each theme directory contains 3 files: _bootswatch, _variables, bootstrap and sometimes _test-vars.scss
 
-1. Bootswatch contains override css for that specific theme.
+1. Bootswatch contains overrides css for that specific theme.
 2. Variables contains all sass variables that will be used by bootstrap on compile. Variables include background color, hyperlink colors, navigation colors and text color.
-3. Bootstrap is similar to main.scss, in that it compiles all the files for the theme.
+3. Bootstrap is similar to main.scss, in that it’s an aggregate for all the files for that specific theme.
 
 
 
@@ -19,9 +20,6 @@ Most of the time you will not need to edit any of the css in any of the above fi
 
 Components contains the scss for all the custom components created by Digital River (and some overrides)
 The objects folder contains html/css design pattern (such as the media object)
-The pdpOneColumnBlock folder contains css/html for the pdp component that displays price, add to cart, product and product title.
-The pdptwoColumnBlock folder is similar to the above, but with a different layout.
-PdpTabs is the tab system component.
 
 Namespace contains all the custom css written by Digital River. Whenever you write any new css for any pages for UIRuntime, it must go into the correct namespace. That is, if you were to add a selector to the full cart page, it must go under `namespace/cart/full`
 
@@ -29,38 +27,29 @@ To add a new page or namespace
 
 1.	 Add a div or another markup element with an id within the naming convention to the dust view file 
 ```html
-<html><body><div id=”fullCart”></div>
+<html><body><div id=”fullCart”></div></body></html>
 ```
-2.	In namespace.scss add a selector for your id and inside that selector import the file that contains the sass file for your page/component. 
-```css
+2.	In `namespace.scss` add a selector for your id and inside that selector import the file that contains the sass file for your page/component.  Make sure that you have created a directory in the namespace folder for your page.
+```sass
 #fullCart {@import "fullCart/fullCart";}
 ```
 
 To add a new theme to the display manager: 
 
-1.	Open the GCPrimeSiteTool under `views/page/site-config.dust`
-2.	The will be a set of options with the names of the current themes.
-3.	Add the following code to the end of the options list
+1.	Open the GCPrimeSiteTool project and navigate to `views/page/site-config.dust`
+2.	There will be a set of options with the names of the current themes.
+3.	Add the following code to the end of the options list (make sure to replace themeName with the name of your theme)
 ```html
 <option value="<%themeName%>"{@if cond="'{site.template.presentationCss}' == '<%themeName%>'"} selected{/if}><%themeName%></option>
 ```
 
-Because bootstrap makes up a good portion of our css, we also have html partials. The various html/dust partials are located at views/components.
-Currently we have 
-1.	nav 
-2.	pagination
-3.	pdpTwoColumn
-4.	pdpOneColumn
-5.	product listings (basic and card layout)
-6.	tab system
-7.	header/footer.
-
+Because bootstrap makes up a good portion of our css, we also have html partials. The various html/dust partials are located at `views/components`.
 To include an html/dust partial in your own dust file (it must be a dust file): use the below code that points to the file that you want.
 ` {>"components/productList/cards.dust"/}`
 
 #general sass
 ##Naming files 
-If you want to create a sass file that you will import into `main.scss` or another file that will aggregate several files, prefix that file with an underscore. When you compile sass files, unless you prefix a file with an underscore, a new css file will be generated.
+If you want to create a sass file that you will import into `main.scss` or another file that will aggregate several files, prefix that file with an underscore. When you compile sass files, unless you prefix a file with an underscore (_), a new css file will be generated.
 
 ##mixins 
 Mixins are similar to functions in programming, expect that they return a block of css.
@@ -68,6 +57,7 @@ Mixins are similar to functions in programming, expect that they return a block 
 ```sass
 .foo{ @include border-radius(5px); }
 ```
+
 Or if you wanted to use it as the value to a property:
 ```sass
 .foo { font-size: size(5px); }
@@ -78,17 +68,49 @@ We have a few mixins at the moment that you can use in your css work:
  ```css
 .foo { @include border-radius(5px); }
 ```
+ Output:
+```css
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px
+  background-clip: padding-box;
+```
+
 2.	Clearfix: a general mixin that clears floats. Example: 
 ```css
 .foo { @include clearfix(); }
 ```
+Output:
+```sass
+  *zoom: 1;
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+```
+
 3.	 Opacity: another general mixin that outputs opacity values. Example:
 ```css
 .foo { @include opacity(0.8); }
 ```
+Output:
+```css
+  opacity: 0.8;
+  filter: alpha(opacity=0.8);
+
 4.	Transform: mixin used to transform elements. Example:
 ```css 
 	.foo { @include transform(1.1); }
+```
+Output:
+```css
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 ```
 
 5.	Darken/Lighten: these are base bootstrap mixins that make a color lighter or darker. Example: 
